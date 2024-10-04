@@ -10,7 +10,6 @@ A dynamic trading bot built with Node.js that simulates stock trading based on r
 - [Logging](#logging)
 - [Future Enhancements](#future-enhancements)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 - **Real-Time Price Fetching**: Fetches live stock prices using the Finnhub API for accurate trading decisions.
@@ -78,6 +77,3 @@ Logs can be helpful for debugging and performance analysis.
 
 ## Contributing
 Contributions are welcome! If you have suggestions for improvements or want to report bugs, please open an issue or submit a pull request.
-
-## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
