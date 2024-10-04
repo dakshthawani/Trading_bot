@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading Bot</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your custom CSS -->
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Trading Bot Dashboard</h1>
+        <div class="card mt-4">
+            <div class="card-body">
+                <form id="tradingForm">
+                    <div class="form-group">
+                        <label for="stockSymbol">Stock Symbol:</label>
+                        <input type="text" class="form-control" id="stockSymbol" name="stockSymbol" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="thresholdBuy">Buy Threshold (%):</label>
+                        <input type="number" class="form-control" id="thresholdBuy" name="thresholdBuy" step="0.01" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="thresholdSell">Sell Threshold (%):</label>
+                        <input type="number" class="form-control" id="thresholdSell" name="thresholdSell" step="0.01" min="0" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Start Trading</button>
+                </form>
+                <div id="loading" class="text-center mt-3" style="display:none;">
+                    <div class="spinner-border" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <p>Processing...</p>
+                </div>
+            </div>
+        </div>
+        <div id="status" class="mt-4"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.getElementById('tradingForm').onsubmit = async function (event) {
+            event.preventDefault(); // Prevent form submission
+            document.getElementById('loading').style.display = 'block'; // Show loading spinner
+
+            // Get values from form
+            const stockSymbol = document.getElementById('stockSymbol').value;
+            const thresholdBuy = document.getElementById('thresholdBuy').value;
+            const thresholdSell = document.getElementById('thresholdSell').value;
+
+            // Send data to server
+            const response = await fetch('/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ stockSymbol, thresholdBuy, thresholdSell }),
+            });
+
+            const result = await response.text();
+            document.getElementById('status').innerHTML = `<div class="alert alert-info">${result}</div>`;
+            document.getElementById('loading').style.display = 'none'; // Hide loading spinner
+        };
+    </script>
+</body>
+</html>
